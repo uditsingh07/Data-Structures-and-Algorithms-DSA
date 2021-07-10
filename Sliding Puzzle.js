@@ -12,11 +12,6 @@ Explanation: Swap the 0 and the 5 in one move.
 */
 
 var slidingPuzzle = function(board) {
-    /*
-  mapping is a dictionnary of possible swapping directions
-    0 1 2 we can swap index 0 only with indices 1 and 3 in the original board
-    3 4 5                                                    
-  */
     const mapping = {
         0: [1, 3],
         1: [0, 2, 4],
@@ -25,21 +20,15 @@ var slidingPuzzle = function(board) {
         4: [1, 3, 5],
         5: [2, 4]
     }
-
-    // a simple function to swap values, it's easier to convert a string to an array then swap
     const swap = (state, pos, next) => {
         const array = state.split('');
         [array[pos], array[next]] = [array[next], array[pos]];
         return array.join('')
     }
-
-    // convert board to string Exmpl '123540'
     let state = '';
     board.forEach(row => state += row.join(''));
 
     const visited = new Set(state);
-
-    // Queue to keep track for state,  position of 0 and moves so far
     const q = [
         [state, state.indexOf('0'), 0]
     ];
@@ -49,9 +38,7 @@ var slidingPuzzle = function(board) {
         const [state, pos, moves] = q.shift();
 
         if (state == '123450')
-            return moves;
-
-        // move 0 to the possible directions (next) in mapping dict 
+            return moves; 
         for (let next of mapping[pos]) {
             const newState = swap(state, pos, next);
 
